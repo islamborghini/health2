@@ -16,6 +16,8 @@
 		A6F11BF82BB9C1EB00DA2245 /* health2UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F11BF72BB9C1EB00DA2245 /* health2UITestsLaunchTests.swift */; };
 		A6F11C052BB9C33500DA2245 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F11C042BB9C33500DA2245 /* ChatViewModel.swift */; };
 		A6F11C082BB9CAE300DA2245 /* OpenAISwift in Frameworks */ = {isa = PBXBuildFile; productRef = A6F11C072BB9CAE300DA2245 /* OpenAISwift */; };
+		A6F11C0A2BB9D98900DA2245 /* HealthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F11C092BB9D98900DA2245 /* HealthManager.swift */; };
+		A6F11C0D2BB9F5E200DA2245 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F11C0C2BB9F5E200DA2245 /* HealthStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,10 @@
 		A6F11BF52BB9C1EB00DA2245 /* health2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = health2UITests.swift; sourceTree = "<group>"; };
 		A6F11BF72BB9C1EB00DA2245 /* health2UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = health2UITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A6F11C042BB9C33500DA2245 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		A6F11C092BB9D98900DA2245 /* HealthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthManager.swift; sourceTree = "<group>"; };
+		A6F11C0B2BB9E6FE00DA2245 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A6F11C0C2BB9F5E200DA2245 /* HealthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
+		A6F11C0E2BB9F99B00DA2245 /* health2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = health2.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +84,8 @@
 		A6F11BCE2BB9C1EA00DA2245 = {
 			isa = PBXGroup;
 			children = (
+				A6F11C0C2BB9F5E200DA2245 /* HealthStore.swift */,
+				A6F11C092BB9D98900DA2245 /* HealthManager.swift */,
 				A6F11C042BB9C33500DA2245 /* ChatViewModel.swift */,
 				A6F11BD92BB9C1EA00DA2245 /* health2 */,
 				A6F11BEA2BB9C1EB00DA2245 /* health2Tests */,
@@ -99,6 +107,8 @@
 		A6F11BD92BB9C1EA00DA2245 /* health2 */ = {
 			isa = PBXGroup;
 			children = (
+				A6F11C0E2BB9F99B00DA2245 /* health2.entitlements */,
+				A6F11C0B2BB9E6FE00DA2245 /* Info.plist */,
 				A6F11BDA2BB9C1EA00DA2245 /* health2App.swift */,
 				A6F11BDC2BB9C1EA00DA2245 /* ContentView.swift */,
 				A6F11BDE2BB9C1EB00DA2245 /* Assets.xcassets */,
@@ -269,8 +279,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6F11BDD2BB9C1EA00DA2245 /* ContentView.swift in Sources */,
+				A6F11C0D2BB9F5E200DA2245 /* HealthStore.swift in Sources */,
 				A6F11C052BB9C33500DA2245 /* ChatViewModel.swift in Sources */,
 				A6F11BDB2BB9C1EA00DA2245 /* health2App.swift in Sources */,
+				A6F11C0A2BB9D98900DA2245 /* HealthManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,12 +443,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = health2/health2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"health2/Preview Content\"";
 				DEVELOPMENT_TEAM = 65DT2NKP54;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = health2/Info.plist;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Access your step count data";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Access your step count data";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -460,12 +476,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = health2/health2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"health2/Preview Content\"";
 				DEVELOPMENT_TEAM = 65DT2NKP54;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = health2/Info.plist;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Access your step count data";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Access your step count data";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

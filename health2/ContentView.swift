@@ -8,7 +8,7 @@ struct ContentView: View {
                 Text("Welcome")
                     .font(.system(size: 36))
                     .padding()
-                Text("Name of the app")
+                Text("Wellth")
                     .font(.system(size: 32))
                     .fontWeight(.bold)
                     .foregroundColor(.red)
@@ -18,7 +18,10 @@ struct ContentView: View {
                 Button("Login", action: login)
                     .padding()
                 NavigationLink(destination: ChatViewModel()) {
-                    Text("Show Detail")
+                    Text("Show Detail").padding()
+                }
+                NavigationLink(destination: HealthManagerView()) {
+                    Text("Your Current Data").padding()
                 }
                 // NavigationLink(destination: Chatbot(viewModel: chatViewModel)) {
                 //     Text("Chatbot")
