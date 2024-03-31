@@ -13,16 +13,38 @@ struct Step: Identifiable {
     let count: Int
     let date: Date
 }
+struct Sleep: Identifiable {
+    let id = UUID()
+    let duration: TimeInterval
+    let startDate: Date
+    let endDate: Date
+}
+
 struct GraphView: View {
     var steps: [Step]
-
+    var sleepData: [Sleep]
+    
     var body: some View {
-        List(steps, id: \.id) { step in
-            VStack(alignment: .leading) {
-                Text("Steps: \(step.count)")
-                Text("Date: \(step.date, style: .date)")
-            }
-        }
+        List {
+                    Section(header: Text("Steps")) {
+                        ForEach(steps, id: \.id) { step in
+                            VStack(alignment: .leading) {
+                                Text("Steps: \(step.count)")
+                                Text("Date: \(step.date, style: .date)")
+                            }
+                        }
+                    }
+
+                    Section(header: Text("Sleep")) {
+                        ForEach(sleepData, id: \.id) { sleep in
+                            VStack(alignment: .leading) {
+                                Text("Duration: \(sleep.duration/3600, specifier: "%.2f") hours")
+                                Text("From: \(sleep.startDate, style: .time)")
+                                Text("To: \(sleep.endDate, style: .time)")
+                            }
+                        }
+                    }
+                }
     }
 }
 
@@ -30,14 +52,21 @@ struct HealthManagerView: View {
     
     private var healthStore: HealthStore?
     @State private var steps: [Step] = [Step]()
-    
+    @State private var sleepData: [Sleep] = [Sleep]()
     init() {
         healthStore = HealthStore()
     }
     
+    private func updateSleepData(from samples: [HKCategorySample]) {
+        self.sleepData = samples.map { sample in
+            Sleep(duration: sample.endDate.timeIntervalSince(sample.startDate), startDate: sample.startDate, endDate: sample.endDate)
+        }
+    }
+    
+    
     private func updateUIFromStatistics(_ statisticsCollection: HKStatisticsCollection) {
         
-        let startDate = Calendar.current.date(byAdding: .day, value: -7, to: Date())!
+        let startDate = Calendar.current.date(byAdding: .day, value: -2, to: Date())!
         let endDate = Date()
         
         statisticsCollection.enumerateStatistics(from: startDate, to: endDate) { (statistics, stop) in
@@ -54,7 +83,9 @@ struct HealthManagerView: View {
         
         NavigationView {
         
-        GraphView(steps: steps)
+        GraphView(steps: steps, sleepData: sleepData)
+                .navigationTitle("Just Walking")
+
             
         .navigationTitle("Just Walking")
         }
@@ -70,6 +101,11 @@ struct HealthManagerView: View {
                                     updateUIFromStatistics(statisticsCollection)
                                 }
                             }
+                            healthStore.calculateSleep { sleepSamples in
+                                if let sleepSamples = sleepSamples {
+                                    // Update the UI
+                                    updateSleepData(from: sleepSamples)
+                                }}
                         }
                     }
                 }
@@ -84,4 +120,3 @@ struct HealthManagerView_Previews: PreviewProvider {
         HealthManagerView()
     }
 }
-

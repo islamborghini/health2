@@ -8,7 +8,7 @@ struct ContentView: View {
                 Text("Welcome")
                     .font(.system(size: 36))
                     .padding()
-                Text("Wellth")
+                Text("WELLTH")
                     .font(.system(size: 32))
                     .fontWeight(.bold)
                     .foregroundColor(.red)

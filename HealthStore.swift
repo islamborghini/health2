@@ -29,7 +29,7 @@ class HealthStore {
         
         let stepType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.stepCount)!
         
-        let startDate = Calendar.current.date(byAdding: .day, value: -7, to: Date())
+        let startDate = Calendar.current.date(byAdding: .day, value: -2, to: Date())
         
         let anchorDate = Date.mondayAt12AM()
         
@@ -48,14 +48,31 @@ class HealthStore {
         }
         
     }
+    func calculateSleep(completion: @escaping ([HKCategorySample]?) -> Void) {
+        let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!
+
+        let startDate = Calendar.current.date(byAdding: .day, value: -2, to: Date())
+        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date(), options: .strictStartDate)
+
+        let query = HKSampleQuery(sampleType: sleepType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { (query, result, error) in
+            guard let samples = result as? [HKCategorySample] else {
+                completion(nil)
+                return
+            }
+            completion(samples)
+        }
+
+        healthStore?.execute(query)
+    }
     
     func requestAuthorization(completion: @escaping (Bool) -> Void) {
         
         let stepType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.stepCount)!
-        
+        let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!
+
         guard let healthStore = self.healthStore else { return completion(false) }
         
-        healthStore.requestAuthorization(toShare: [], read: [stepType]) { (success, error) in
+        healthStore.requestAuthorization(toShare: [], read: [stepType, sleepType]) { (success, error) in
             completion(success)
         }
         
