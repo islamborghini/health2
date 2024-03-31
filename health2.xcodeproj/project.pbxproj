@@ -14,6 +14,8 @@
 		A6F11BEC2BB9C1EB00DA2245 /* health2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F11BEB2BB9C1EB00DA2245 /* health2Tests.swift */; };
 		A6F11BF62BB9C1EB00DA2245 /* health2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F11BF52BB9C1EB00DA2245 /* health2UITests.swift */; };
 		A6F11BF82BB9C1EB00DA2245 /* health2UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F11BF72BB9C1EB00DA2245 /* health2UITestsLaunchTests.swift */; };
+		A6F11C052BB9C33500DA2245 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F11C042BB9C33500DA2245 /* ChatViewModel.swift */; };
+		A6F11C082BB9CAE300DA2245 /* OpenAISwift in Frameworks */ = {isa = PBXBuildFile; productRef = A6F11C072BB9CAE300DA2245 /* OpenAISwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,7 @@
 		A6F11BF12BB9C1EB00DA2245 /* health2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = health2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6F11BF52BB9C1EB00DA2245 /* health2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = health2UITests.swift; sourceTree = "<group>"; };
 		A6F11BF72BB9C1EB00DA2245 /* health2UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = health2UITestsLaunchTests.swift; sourceTree = "<group>"; };
+		A6F11C042BB9C33500DA2245 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6F11C082BB9CAE300DA2245 /* OpenAISwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +78,7 @@
 		A6F11BCE2BB9C1EA00DA2245 = {
 			isa = PBXGroup;
 			children = (
+				A6F11C042BB9C33500DA2245 /* ChatViewModel.swift */,
 				A6F11BD92BB9C1EA00DA2245 /* health2 */,
 				A6F11BEA2BB9C1EB00DA2245 /* health2Tests */,
 				A6F11BF42BB9C1EB00DA2245 /* health2UITests */,
@@ -143,6 +148,9 @@
 			dependencies = (
 			);
 			name = health2;
+			packageProductDependencies = (
+				A6F11C072BB9CAE300DA2245 /* OpenAISwift */,
+			);
 			productName = health2;
 			productReference = A6F11BD72BB9C1EA00DA2245 /* health2.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +223,9 @@
 				Base,
 			);
 			mainGroup = A6F11BCE2BB9C1EA00DA2245;
+			packageReferences = (
+				A6F11C062BB9CAE300DA2245 /* XCRemoteSwiftPackageReference "OpenAISwift" */,
+			);
 			productRefGroup = A6F11BD82BB9C1EA00DA2245 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -258,6 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6F11BDD2BB9C1EA00DA2245 /* ContentView.swift in Sources */,
+				A6F11C052BB9C33500DA2245 /* ChatViewModel.swift in Sources */,
 				A6F11BDB2BB9C1EA00DA2245 /* health2App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -588,6 +600,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A6F11C062BB9CAE300DA2245 /* XCRemoteSwiftPackageReference "OpenAISwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adamrushy/OpenAISwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A6F11C072BB9CAE300DA2245 /* OpenAISwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A6F11C062BB9CAE300DA2245 /* XCRemoteSwiftPackageReference "OpenAISwift" */;
+			productName = OpenAISwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A6F11BCF2BB9C1EA00DA2245 /* Project object */;
 }
