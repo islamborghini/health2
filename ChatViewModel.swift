@@ -10,7 +10,18 @@ struct ChatViewModel: View {
     @State private var messages: [Message] = []
     @State private var inputMessage = ""
     @State private var apiKey = "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" // You should securely manage this API key
-
+    
+    init() {
+            // Create the default message
+            let defaultMessageContent = "My sleep: 11,68 hours, my steps in last 3 days: 0,0,376"
+            // Set the input message to the default content
+            _inputMessage = State(initialValue: defaultMessageContent)
+            
+            // Add the default message as the first message in the chat from the system/bot
+            let defaultMessage = Message(content: defaultMessageContent, isUser: false)
+            _messages = State(initialValue: [defaultMessage])
+        }
+    
     var body: some View {
         VStack {
             List(messages) { message in

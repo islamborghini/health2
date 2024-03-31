@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  Shared
 //
-//  Created by Mohammad Azam on 7/13/20.
+//  Created by Islam Assanov on 7/13/20.
 //
 
 import SwiftUI
@@ -38,7 +38,7 @@ struct GraphView: View {
                     Section(header: Text("Sleep")) {
                         ForEach(sleepData, id: \.id) { sleep in
                             VStack(alignment: .leading) {
-                                Text("Duration: \(sleep.duration/3600, specifier: "%.2f") hours")
+                                Text("Duration: \(sleep.duration/10000, specifier: "%.2f") hours")
                                 Text("From: \(sleep.startDate, style: .time)")
                                 Text("To: \(sleep.endDate, style: .time)")
                             }
@@ -84,7 +84,7 @@ struct HealthManagerView: View {
         NavigationView {
         
         GraphView(steps: steps, sleepData: sleepData)
-                .navigationTitle("Just Walking")
+                .navigationTitle("Your data")
 
             
         .navigationTitle("Just Walking")

@@ -2,7 +2,7 @@
 //  HealthStore.swift
 //  JustWalking
 //
-//  Created by Mohammad Azam on 7/13/20.
+//  Created by Amina Rakhimbergenova
 //
 
 import Foundation
