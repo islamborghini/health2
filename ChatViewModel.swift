@@ -1,5 +1,4 @@
 import SwiftUI
-import Combine
 
 struct Message: Identifiable {
     var id = UUID()
@@ -7,31 +6,11 @@ struct Message: Identifiable {
     var isUser: Bool
 }
 
-class Chatbot {
-    var cancellables: Set<AnyCancellable> = []
-    
-    func reply(to message: String, completion: @escaping (String) -> Void) {
-        // Simulate network request to OpenAI API
-        requestReplyFromOpenAI(for: message) { response in
-            completion(response)
-        }
-    }
-    
-    private func requestReplyFromOpenAI(for message: String, completion: @escaping (String) -> Void) {
-        // This is a placeholder for actual API request logic
-        // In a real scenario, you would make an HTTP request to the OpenAI API here
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // Simulating network delay
-            let reply = "This is a simulated reply for: \(message)"
-            completion(reply)
-        }
-    }
-}
-
 struct ChatViewModel: View {
     @State private var messages: [Message] = []
     @State private var inputMessage = ""
-    let chatbot = Chatbot()
-    
+    @State private var apiKey = "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" // You should securely manage this API key
+
     var body: some View {
         VStack {
             List(messages) { message in
@@ -43,12 +22,12 @@ struct ChatViewModel: View {
                     .padding(5)
                     .frame(maxWidth: .infinity, alignment: message.isUser ? .trailing : .leading)
             }
-            
+
             HStack {
                 TextField("Enter your message", text: $inputMessage)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(8)
-                
+
                 Button(action: sendMessage) {
                     Text("Send")
                 }
@@ -61,20 +40,71 @@ struct ChatViewModel: View {
             .padding()
         }
     }
-    
+
     func sendMessage() {
         guard !inputMessage.isEmpty else { return }
         let userMessage = Message(content: inputMessage, isUser: true)
         messages.append(userMessage)
-        
-        chatbot.reply(to: inputMessage) { botReply in
-            let botMessage = Message(content: botReply, isUser: false)
+
+        requestReplyFromOpenAI(for: inputMessage) { reply in
             DispatchQueue.main.async {
+                let botMessage = Message(content: reply, isUser: false)
                 self.messages.append(botMessage)
             }
         }
-        
+
         inputMessage = ""
+    }
+
+    private func requestReplyFromOpenAI(for message: String, completion: @escaping (String) -> Void) {
+        let url = URL(string: "https://api.openai.com/v1/chat/completions")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let requestBody: [String: Any] = [
+            "model": "gpt-3.5-turbo",
+            "messages": [
+                ["role": "system", "content": "You are a helpful assistant."],
+                ["role": "user", "content": message]
+            ] as [[String: Any]]
+        ]
+
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: requestBody, options: [])
+        } catch {
+            print("Error serializing request body: \(error)")
+            completion("Error serializing request body.")
+            return
+        }
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                print("Network request failed: \(String(describing: error))")
+                completion("Network request failed.")
+                return
+            }
+
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                   let choices = json["choices"] as? [[String: Any]],
+                   let firstChoice = choices.first,
+                   let message = firstChoice["message"] as? [String: Any],
+                   let content = message["content"] as? String {
+                    completion(content)
+                } else {
+                    let responseString = String(data: data, encoding: .utf8) ?? "Invalid response data"
+                    print("Failed to parse response: \(responseString)")
+                    completion("Failed to parse response.")
+                }
+            } catch {
+                print("Failed to parse response: \(error)")
+                completion("Failed to parse response.")
+            }
+        }
+
+        task.resume()
     }
 }
 
